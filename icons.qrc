@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file alias="back">icons/icons8-go-back-96.png</file>
+        <file alias="add">icons/icons8-plus-96.png</file>
+    </qresource>
+</RCC>

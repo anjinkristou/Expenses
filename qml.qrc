@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>SheetList.qml</file>
+        <file>SheetDelegate.qml</file>
+        <file>SheetSectionDelegate.qml</file>
+        <file>RecordList.qml</file>
+        <file>RecordDelegate.qml</file>
+        <file>SheetPage.qml</file>
+        <file>RecordPage.qml</file>
+        <file>SheetDialog.qml</file>
+        <file>SheetForm.qml</file>
+    </qresource>
+</RCC>
