@@ -7,10 +7,12 @@
 #include <QVector>
 
 class Record;
+class DataManager;
 
 class Sheet : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(DataManager* dataManager READ dataManager WRITE setDataManager NOTIFY dataManagerChanged)
     Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(int status READ status WRITE setStatus NOTIFY statusChanged)
@@ -29,15 +31,19 @@ public:
 
     qreal totalAmount() const;
 
-    Record* recordAt(int index) const;
+    Q_INVOKABLE Record* recordAt(int index) const;
 
+    DataManager* dataManager() const;
+    Q_INVOKABLE Record *addRecord();
 
 public slots:
     void setName(QString name);
     void setStatus(int status);
     void setSubmittedDate(const QDate &date);
-    void addRecord(Record* record);    
+    void addRecord(Record* record);
     void setId(int id);
+
+    void setDataManager(DataManager* dataManager);
 
 signals:
     void nameChanged(const QString &name);
@@ -47,13 +53,28 @@ signals:
     void totalAmountChanged(qreal total);
     void changed();    
     void idChanged(int id);
+    void recordChanged(int index);
+    void beginInsert(int first, int last);
+    void endInsert();
+
+    void beginRemove(int first, int last);
+    void endRemove();
+
+    void beginReset();
+    void endReset();
+
+    void dataManagerChanged(DataManager* dataManager);
 
 private:
+    int m_id;
     QString m_name;
     int m_status;
     QDate m_submittedDate;
     QVector<Record *> m_records;
-    int m_id;
+    DataManager* m_dataManager;
+
+    void updateFields();
+    void loadRecords();
 };
 
 #endif // SHEET_H

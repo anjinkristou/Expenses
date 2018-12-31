@@ -5,11 +5,23 @@ Page {
     id: root
 
     property alias sheet : recordList.sheet
+    property alias selectedRecord: recordList.selectedRecord
+    signal recordSelected()
+
+    RecordDialog {
+        id: recordDialog
+        onFinished: {
+
+        }
+    }
 
     RecordList {
         id: recordList
         anchors.fill: parent
-        sheet: sheetList.selectedSheet
+        sheet: root.recordSelected()
+        onPressAndHold: {
+            recordDialog.editRecord(recordList.selectedRecord)
+        }
     }
 
     RoundButton {
@@ -19,7 +31,7 @@ Page {
         anchors.bottom: parent.bottom
         icon.source: "icon/add"
         onClicked: {
-
+            recordDialog.createRecord(sheet.addRecord())
         }
     }
 }

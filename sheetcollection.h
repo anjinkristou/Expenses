@@ -14,7 +14,7 @@ class SheetCollection : public QObject
     Q_PROPERTY(DataManager* dataManager READ dataManager WRITE setDataManager NOTIFY dataManagerChanged)
 public:
     explicit SheetCollection(DataManager *dataManager = nullptr, QObject *parent = nullptr);
-    void addSheet(Sheet *sheet, bool persist = true);
+    void addSheet(Sheet *sheet);
 
     int sheetCount() const;
     Q_INVOKABLE Sheet *sheetAt(int index) const;

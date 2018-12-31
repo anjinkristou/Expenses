@@ -48,7 +48,19 @@ void RecordModel::setSheet(Sheet *sheet)
         if(m_sheet) m_sheet->disconnect(this);
         m_sheet = sheet;
         if(m_sheet){
-
+            connect(sheet, &Sheet::recordChanged, this, [this](int index){
+                emit this->dataChanged(this->index(index, 0), this->index(index, 0));
+            });
+            connect(sheet, &Sheet::beginInsert, this, [this](int first, int last){
+                emit this->beginInsertRows(QModelIndex(), first, last);
+            });
+            connect(sheet, &Sheet::endInsert, this, &RecordModel::endInsertRows);
+            connect(sheet, &Sheet::beginRemove, this, [this](int first, int last){
+                emit this->beginRemoveRows(QModelIndex(), first, last);
+            });
+            connect(sheet, &Sheet::endRemove, this, &RecordModel::endRemoveRows);
+            connect(sheet, &Sheet::beginReset, this, &RecordModel::beginResetModel);
+            connect(sheet, &Sheet::endReset, this, &RecordModel::endResetModel);
         }
         endResetModel();
         emit sheetChanged(sheet);

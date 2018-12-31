@@ -7,7 +7,9 @@ ListView {
     id: listView
 
     property alias sheet : recordModel.sheet
+    property Record selectedRecord: null
     signal clicked(int index)
+    signal pressAndHold(int index)
 
     delegate: RecordDelegate {
         id: delegate
@@ -15,7 +17,21 @@ ListView {
 
         Connections {
             target: delegate
-            onClicked: listView.clicked(index)
+            onClicked: {
+                selectedRecord = sheet.recordAt(index)
+                listView.clicked(index)
+            }
+            onPressAndHold: {
+                selectedRecord = sheet.recordAt(index)
+                listView.pressAndHold(index)
+            }
+            onDeleteRequested: {
+                sheet.removeAt(index)
+            }
+            onEditRequested: {
+                selectedRecord = sheet.recordAt(index)
+                listView.pressAndHold(index)
+            }
         }
     }
 

@@ -65,6 +65,8 @@ void SheetModel::setSheetCollection(SheetCollection *collection)
                 emit this->beginRemoveRows(QModelIndex(), first, last);
             });
             connect(collection, &SheetCollection::endRemove, this, &SheetModel::endRemoveRows);
+            connect(collection, &SheetCollection::beginReset, this, &SheetModel::beginResetModel);
+            connect(collection, &SheetCollection::endReset, this, &SheetModel::endResetModel);
         }
         endResetModel();
         emit sheetCollectionChanged(collection);

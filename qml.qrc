@@ -10,5 +10,7 @@
         <file>RecordPage.qml</file>
         <file>SheetDialog.qml</file>
         <file>SheetForm.qml</file>
+        <file>RecordDialog.qml</file>
+        <file>RecordForm.qml</file>
     </qresource>
 </RCC>
