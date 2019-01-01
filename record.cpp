@@ -32,7 +32,7 @@ void Record::setAmount(qreal amount)
     m_amount = amount;
 
     if(m_dataManager){
-        m_dataManager->setField("records", m_id, "amount", m_amount);
+        m_dataManager->setField(tableName(), m_id, "amount", m_amount);
     }
 
     emit amountChanged(m_amount);
@@ -91,7 +91,7 @@ void Record::updateFields()
     if(m_dataManager){
         QStringList fileds;
         fileds << "amount";
-        QVariantMap props = m_dataManager->fields("records", m_id, fileds);
+        QVariantMap props = m_dataManager->fields(tableName(), m_id, fileds);
 
         m_amount = props["amount"].toReal();
     }

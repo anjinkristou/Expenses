@@ -36,6 +36,8 @@ public:
     DataManager* dataManager() const;
     Q_INVOKABLE Record *addRecord();
 
+    static QString tableName() { return "sheets"; }
+
 public slots:
     void setName(QString name);
     void setStatus(int status);

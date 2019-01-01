@@ -24,7 +24,7 @@ void SheetCollection::addSheet(Sheet *sheet)
         });
 
         if(sheet->id() < 0 && m_dataManager){
-            int id = m_dataManager->add("sheets");
+            int id = m_dataManager->add(Sheet::tableName());
             sheet->setId(id);
             sheet->setDataManager(m_dataManager);
         }
@@ -58,7 +58,7 @@ void SheetCollection::removeAt(int index)
     beginRemove(index, index);
     Sheet *sheet = m_sheets.takeAt(index);
     if(m_dataManager){
-        m_dataManager->remove("sheets", sheet->id());
+        m_dataManager->remove(Sheet::tableName(), sheet->id());
     }
     sheet->deleteLater();
     endRemove();
@@ -85,7 +85,7 @@ void SheetCollection::loadSheets()
 {
     if(m_dataManager){
         DataManager *manager = m_dataManager;
-        m_dataManager->forEach("sheets", [this, manager](int id){
+        m_dataManager->forEach(Sheet::tableName(), [this, manager](int id){
             Sheet *s = new Sheet(this);
             s->setId(id);
             s->setDataManager(manager);

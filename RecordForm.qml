@@ -7,36 +7,31 @@ GridLayout {
 
     property alias amount: amount
     property int minimumInputSize: 120
+    property string placeholderText: qsTr("0.0")
 
     rows: 2
     columns: 2
 
     Label {
-        text: qsTr("Amount")
+        text: qsTr("Amount") + ":"
         Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
     }
 
-    SpinBox {
-        id: amount
-        focus: true
-        from: 0
-        value: 0
-        to: 10000
+    RowLayout{
+        Layout.fillWidth: true
+        spacing: 4
 
-        property int decimals: 2
-        property real realValue: value / 100
-
-        validator: DoubleValidator {
-            bottom: Math.min(amount.from, amount.to)
-            top:  Math.max(amount.from, amount.to)
+        Text {
+            text: "€"
         }
-
-        textFromValue: function(value, locale) {
-            return Number(value / 100).toLocaleString(locale, 'f', amount.decimals)
-        }
-
-        valueFromText: function(text, locale) {
-            return Number.fromLocaleString(locale, text) * 100
+        TextField {
+            id: amount
+            focus: true
+            Layout.fillWidth: true
+            Layout.minimumWidth: grid.minimumInputSize
+            Layout.alignment: Qt.AlignRight | Qt.AlignBaseline
+            placeholderText: grid.placeholderText
+            validator : RegExpValidator { regExp : /[0-9]+\.[0-9]+/ }
         }
     }
 }

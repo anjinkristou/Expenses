@@ -29,6 +29,8 @@ public:
 
     DataManager* dataManager() const;
 
+    static QString tableName() { return "records"; }
+
 
 public slots:
     void setId(int id);

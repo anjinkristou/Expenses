@@ -12,7 +12,7 @@ Dialog {
 
     function createRecord(record) {
         dialog.record = record
-        form.amount.value = 0;
+        form.amount.text = "0";
 
         dialog.title = qsTr("Add Record");
         dialog.open();
@@ -20,7 +20,7 @@ Dialog {
 
     function editRecord(record) {
         dialog.record = record
-        form.amount.value = record.amount;
+        form.amount.text = record.amount;
 
         dialog.title = qsTr("Edit Record");
         dialog.open();
@@ -40,7 +40,7 @@ Dialog {
 
     onAccepted: {
         if(dialog.record){
-            record.amount = form.amount.realValue
+            record.amount = parseFloat(form.amount.text)
         }
 
         dialog.record = null

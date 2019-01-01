@@ -46,7 +46,7 @@ void Sheet::setName(QString name)
     m_name = name;
 
     if(m_dataManager){
-        m_dataManager->setField("sheets", m_id, "name", m_name);
+        m_dataManager->setField(tableName(), m_id, "name", m_name);
     }
     emit nameChanged(m_name);
 }
@@ -59,7 +59,7 @@ void Sheet::setStatus(int status)
     m_status = status;
 
     if(m_dataManager){
-        m_dataManager->setField("sheets", m_id, "status", m_status);
+        m_dataManager->setField(tableName(), m_id, "status", m_status);
     }
     emit statusChanged(m_status);
 }
@@ -85,8 +85,8 @@ void Sheet::addRecord(Record *record)
         });
 
         if(record->id() < 0 && m_dataManager){
-            int id = m_dataManager->add("records");
-            m_dataManager->setField("records", id, "sheet", m_id);
+            int id = m_dataManager->add(Record::tableName());
+            m_dataManager->setField(Record::tableName(), id, "sheet", m_id);
             record->setId(id);
             record->setDataManager(m_dataManager);
         }
@@ -134,7 +134,7 @@ void Sheet::updateFields()
     if(m_dataManager){
         QStringList fileds;
         fileds << "name" << "status";
-        QVariantMap props = m_dataManager->fields("sheets", m_id, fileds);
+        QVariantMap props = m_dataManager->fields(tableName(), m_id, fileds);
 
         m_name = props["name"].toString();
         m_status = props["status"].toInt();
@@ -145,7 +145,7 @@ void Sheet::loadRecords()
 {
     if(m_dataManager){
         DataManager *manager = m_dataManager;
-        m_dataManager->forEachDenpendent("records", "sheet", m_id, [this, manager](int id){
+        m_dataManager->forEachDenpendent(Record::tableName(), "sheet", m_id, [this, manager](int id){
             Record *r = new Record(this);
             r->setId(id);
             r->setDataManager(manager);
