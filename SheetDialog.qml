@@ -38,6 +38,7 @@ Dialog {
 
     contentItem: SheetForm {
         id: form
+        statuses: sheetStatusCollection
     }
 
     onAccepted: {

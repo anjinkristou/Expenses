@@ -2,7 +2,6 @@
 
 #include <QVariantMap>
 
-#include "sheetstatuses.h"
 #include "record.h"
 #include "datamanager.h"
 
@@ -10,7 +9,7 @@ Sheet::Sheet(QObject *parent)
     : QObject(parent)
     , m_id(-1)
     , m_name("No name")
-    , m_status(SheetStatuses::PendingStatus)
+    , m_status(-1)
     , m_submittedDate(QDate::currentDate())
     , m_dataManager(nullptr)
 {

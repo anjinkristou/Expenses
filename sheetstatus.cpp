@@ -1,11 +1,13 @@
 #include "sheetstatus.h"
 
+#include "datamanager.h"
+
 SheetStatus::SheetStatus(QObject *parent)
     : QObject(parent)
     , m_dataManager(nullptr)
     , m_id(-1)
 {
-
+    connect(this, &SheetStatus::nameChanged, this, &SheetStatus::changed);
 }
 
 DataManager *SheetStatus::dataManager() const
@@ -19,6 +21,9 @@ void SheetStatus::setDataManager(DataManager *dataManager)
         return;
 
     m_dataManager = dataManager;
+
+    updateFields();
+
     emit dataManagerChanged(m_dataManager);
 }
 
@@ -37,5 +42,21 @@ void SheetStatus::setName(QString name)
         return;
 
     m_name = name;
+
+    if(m_dataManager){
+        m_dataManager->setField(tableName(), m_id, "name", m_name);
+    }
+
     emit nameChanged(m_name);
+}
+
+void SheetStatus::updateFields()
+{
+    if(m_dataManager){
+        QStringList fileds;
+        fileds << "name";
+        QVariantMap props = m_dataManager->fields(tableName(), m_id, fileds);
+
+        m_name = props["name"].toString();
+    }
 }

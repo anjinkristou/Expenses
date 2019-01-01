@@ -44,6 +44,25 @@ void SheetStatusModel::setSheetStatusCollection(SheetStatusCollection *sheetStat
     if (m_sheetStatusCollection == sheetStatusCollection)
         return;
 
+    beginResetModel();
+    if(m_sheetStatusCollection) m_sheetStatusCollection->disconnect(this);
+
     m_sheetStatusCollection = sheetStatusCollection;
+    if(sheetStatusCollection){
+        connect(sheetStatusCollection, &SheetStatusCollection::sheetStatusChanged, this, [this](int index){
+            emit this->dataChanged(this->index(index, 0), this->index(index, 0));
+        });
+        connect(sheetStatusCollection, &SheetStatusCollection::beginInsert, this, [this](int first, int last){
+            emit this->beginInsertRows(QModelIndex(), first, last);
+        });
+        connect(sheetStatusCollection, &SheetStatusCollection::endInsert, this, &SheetStatusModel::endInsertRows);
+        connect(sheetStatusCollection, &SheetStatusCollection::beginRemove, this, [this](int first, int last){
+            emit this->beginRemoveRows(QModelIndex(), first, last);
+        });
+        connect(sheetStatusCollection, &SheetStatusCollection::endRemove, this, &SheetStatusModel::endRemoveRows);
+        connect(sheetStatusCollection, &SheetStatusCollection::beginReset, this, &SheetStatusModel::beginResetModel);
+        connect(sheetStatusCollection, &SheetStatusCollection::endReset, this, &SheetStatusModel::endResetModel);
+    }
+    endResetModel();
     emit sheetStatusCollectionChanged(m_sheetStatusCollection);
 }

@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <functional>
+#include <QVariant>
+#include <QVariantMap>
+#include <QString>
 
 class DataManager : public QObject
 {

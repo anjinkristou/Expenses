@@ -2,6 +2,7 @@
 #define SHEETSTATUS_H
 
 #include <QObject>
+#include <QString>
 
 class DataManager;
 
@@ -41,6 +42,8 @@ private:
     DataManager* m_dataManager;
     int m_id;
     QString m_name;
+
+    void updateFields();
 };
 
 #endif // SHEETSTATUS_H

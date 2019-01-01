@@ -12,7 +12,7 @@ class SheetStatusCollection : public QObject
     Q_OBJECT
     Q_PROPERTY(DataManager* dataManager READ dataManager WRITE setDataManager NOTIFY dataManagerChanged)
 public:
-    explicit SheetStatusCollection(QObject *parent = nullptr);
+    explicit SheetStatusCollection(DataManager *dataManager = nullptr, QObject *parent = nullptr);
 
     DataManager* dataManager() const;
 

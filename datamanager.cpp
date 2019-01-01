@@ -89,7 +89,7 @@ void DataManager::createDatabase()
 {
     QSqlQuery query(m_database);
 
-    query.exec("CREATE TABLE IF NOT EXISTS sheets (id INTEGER UNIQUE PRIMARY KEY, name VARCHAR(30), status INTEGER)");
+    query.exec("CREATE TABLE IF NOT EXISTS statuses (id INTEGER UNIQUE PRIMARY KEY, name VARCHAR(30))");
+    query.exec("CREATE TABLE IF NOT EXISTS sheets (id INTEGER UNIQUE PRIMARY KEY, name VARCHAR(30), status INTEGER, FOREIGN KEY(status) REFERENCES statuses(id))");
     query.exec("CREATE TABLE IF NOT EXISTS records (id INTEGER UNIQUE PRIMARY KEY, amount REAL, sheet INTEGER, FOREIGN KEY(sheet) REFERENCES sheets(id))");
-
 }

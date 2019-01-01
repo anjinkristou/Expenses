@@ -3,11 +3,32 @@
 #include "datamanager.h"
 #include "sheetstatus.h"
 
-SheetStatusCollection::SheetStatusCollection(QObject *parent)
+SheetStatusCollection::SheetStatusCollection(DataManager *dataManager, QObject *parent)
     : QObject(parent)
-    , m_dataManager(nullptr)
+    , m_dataManager(dataManager)
 {
+    if(m_dataManager) {
+        loadStatus();
+    }
 
+    if (m_statuses.size() == 0){
+        SheetStatus *s;
+        s = new SheetStatus(this);
+        addSheetStatus(s);
+        s->setName("Unsubmitted");
+
+        s = new SheetStatus(this);
+        addSheetStatus(s);
+        s->setName("Submitted");
+
+        s = new SheetStatus(this);
+        addSheetStatus(s);
+        s->setName("Verified");
+
+        s = new SheetStatus(this);
+        addSheetStatus(s);
+        s->setName("Reimbursed");
+    }
 }
 
 DataManager *SheetStatusCollection::dataManager() const
