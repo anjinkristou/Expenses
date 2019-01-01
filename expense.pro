@@ -19,7 +19,10 @@ SOURCES += \
     record.cpp \
     recordmodel.cpp \
     sheetcollection.cpp \
-    datamanager.cpp
+    datamanager.cpp \
+    sheetstatus.cpp \
+    sheetstatuscollection.cpp \
+    sheetstatusmodel.cpp
 
 RESOURCES += \
         qml.qrc \
@@ -42,8 +45,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     sheetmodel.h \
     sheet.h \
-    sheetstatuses.h \
     record.h \
     recordmodel.h \
     sheetcollection.h \
-    datamanager.h
+    datamanager.h \
+    sheetstatus.h \
+    sheetstatuscollection.h \
+    sheetstatusmodel.h
